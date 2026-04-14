@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\DosenController;
 use App\Http\Controllers\Auth\MahasiswaController;
 use Illuminate\Support\Facades\Route;
 
@@ -8,6 +9,22 @@ Route::get('/', function () {
 });
 
 Route::get('/mahasiswa', [MahasiswaController::class, 'index']);
+// Route::get('/mahasiswa', [\App\Http\Controllers\Auth\MahasiswaController::class, 'index']); // menggunakan namespace lengkap
+
+Route::get('/dosen', [DosenController::class, 'index']);
+
+//Route::get('/insert-sql', [MahasiswaController::class, 'insertSql']);
+
+Route::get('/insert-sql',[MahasiswaController::class,'insertSql']);
+Route::get('/insert-prepared', [MahasiswaController::class,'insertPrepared']);
+Route::get('/insert-binding',[MahasiswaController::class,'insertBinding']);
+Route::get('/update', [MahasiswaController::class,'update']);
+Route::get('/delete', [MahasiswaController::class,'delete']);
+Route::get('/select', [MahasiswaController::class,'select']);
+Route::get('/select-tampil', [MahasiswaController::class,'selectTampil']);
+Route::get('/select-view', [MahasiswaController::class,'selectView']);
+Route::get('/select-where', [MahasiswaController::class,'selectWhere']);
+Route::get('/statement', [MahasiswaController::class,'statement']);
 
 //use Illuminate\Support\Facades\Route;
 
@@ -99,7 +116,7 @@ Route::get('/mahasiswa', [MahasiswaController::class, 'index']);
 //     return view('akademik.dosen',['dosen'=>$arrDosen]);
 // });
 
-// Route::get('/pnp/{jurusan}/{prodi}', function ($jurusan, $prodi) {
-//     $data = [$jurusan, $prodi];
-//     return view('akademik.prodi')->with('data', $data);
-// })->name('prodi');
+Route::get('/pnp/{jurusan}/{prodi}', function ($jurusan, $prodi) {
+    $data = [$jurusan, $prodi];
+    return view('akademik.prodi')->with('data', $data);
+})->name('prodi');
