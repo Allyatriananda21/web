@@ -15,8 +15,9 @@ class CategorySeeder extends Seeder
     {
         $categories = ['Elektronik', 'Fashion', 'Makanan', 'Alat Tulis'];
 
-    foreach ($categories as $cat) {
-        Category::create(['name' => $cat]);
-    }
+        foreach ($categories as $cat) {
+            Category::firstOrCreate(['name' => $cat]);
+        }
     }
 }
+
