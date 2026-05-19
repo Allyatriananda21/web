@@ -37,7 +37,8 @@
                 <tbody>
                     @foreach($products as $p)
                     <tr>
-                        <td class="ps-4">{{ $loop->iteration }}</td>
+                        <td>{{ $loop->iteration + ($products->currentPage() - 1) * $products->perPage()}}</td>
+                        <!-- <td class="ps-4">{{ $loop->iteration }}</td> -->
                         <td>{{ $p->name }}</td>
                         <td>{{ $p->category->name }}</td>
                         <td class="text-end">Rp {{ number_format($p->price, 0, ',', '.') }}</td>
