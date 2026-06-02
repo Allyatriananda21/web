@@ -2,38 +2,49 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SIPRO - Sistem Produk</title>
-    <meta name="author" content="Yori Adi Atma">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory App</title>
+    <!-- Memanggil CSS Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background: #f8fafc;
-        }
-        .page-title {
-            letter-spacing: -.03em;
-        }
-        .table-wrap {
-            overflow-x: auto;
-        }
-        .table td, .table th {
-            vertical-align: middle;
-        }
-        .pagination .page-link {
-            padding: .25rem .5rem;
-            font-size: .85rem;
-        }
-        .pagination .page-item:first-child .page-link,
-        .pagination .page-item:last-child .page-link {
-            border-radius: .25rem;
-        }
-    </style>
 </head>
-<body>
-    <div class="container-lg py-4">
-        @yield('content')
-    </div>
+<body class="d-flex flex-column min-vh-100 bg-light">
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- BAGIAN ATAS: NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url('/') }}">Inventory App</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto">
+                    <!-- Navigasi Home -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/') }}">Home</a>
+                    </li>
+                    <!-- Navigasi Produk -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('products.index') }}">Product</a>
+                    </li>
+                    <!-- Navigasi Kategori -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('categories.index') }}">Category</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- BAGIAN TENGAH: KONTEN DINAMIS -->
+    <main class="container my-5 flex-grow-1 d-flex flex-column justify-content-center">
+        @yield('content')
+    </main>
+
+    <!-- BAGIAN BAWAH: FOOTER -->
+    @if(!Route::is('products.*') && !Route::is('categories.*'))
+        <footer class="bg-dark text-white text-center py-3 mt-auto">
+            <div class="container">
+                <p class="mb-0">&copy; 2026 Inventory App - Manajemen Informatika PNP</p>
+            </div>
+        </footer>
+    @endif
+
 </body>
 </html>

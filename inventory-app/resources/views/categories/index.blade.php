@@ -1,43 +1,61 @@
 @extends('layouts.main')
 
 @section('content')
-<div class="d-flex justify-content-between mb-3">
-    <h2>Daftar Kategori</h2>
-    <!-- Link arah ke Route Create -->
-    <a href="{{ route('categories.create') }}" class="btn btn primary">+ Tambah Kategori</a>
-</div>
+<x-page-header :title="'Daftar Kategori'" :subtitle="'Kelola kategori produk agar daftar lebih rapi.'" :button="['url' => route('categories.create'), 'text' => '+ Tambah Kategori', 'variant' => 'btn-success']" :bg="false" />
+
 @if (session('success'))
-<div class="alert alert-success">{{session('success')}}</div>
-    @endif
-    <table class="table table-bordered">
-        <thead class="table-dark">
-            <tr>
-                <th>No</th>
-                <th>Nama Kategori</th>
-                <th width="150px">Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Kita loop data hasil tarikan Eloquent ORM -->
-            <!-- $index untuk mendapat nomor urutan asli bawaan foreach -->
-            @foreach ($categories as $index => $cat)
-            <tr>
-                <td>{{ $index + 1 }}</td>
-                <td>{{ $cat->name }}</td>
-                <!-- Kolom tombol interaksi -->
-                <td>
-                    <a href="{{ route('categories.edit', $cat -> id) }}"
-                        class="btn btn-sm btn-warning">Edit</a>
-                    <!-- Form khusus hapus untuk melindungi dari pencurian klik GET -->
-                    <form action="{{ route('categories.destroy', $cat->id) }}"
-                     method="POST" class="d-inline">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-sm btn-danger" onclick="return confirm('Hapus Kategori ini?')">Hapus</button>
-                    </form>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+<div class="alert alert-success alert-dismissible fade show rounded-4 mb-4" role="alert">
+    {{ session('success') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
+
+<div class="card shadow-sm rounded-4 overflow-hidden">
+    <div class="card-body p-3">
+        <div class="table-responsive">
+            <table class="table table-sm table-striped table-hover table-bordered align-middle mb-0">
+                <thead class="table-light text-dark">
+                    <tr>
+                        <th class="ps-4">No</th>
+                        <th>Nama Kategori</th>
+                        <th class="text-center pe-4">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($categories as $index => $cat)
+                    <tr>
+                        <td class="ps-4">{{ $index + 1 }}</td>
+                        <td>{{ $cat->name }}</td>
+                        <td class="text-center pe-4">
+                            <div class="d-flex justify-content-center gap-2">
+                                <a href="{{ route('categories.edit', $cat->id) }}" class="btn btn-sm btn-warning text-dark">Update</a>
+                                <form action="{{ route('categories.destroy', $cat->id) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-sm btn-danger" onclick="return confirm('Hapus Kategori ini?')">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="3" class="text-center py-5">
+                            Belum ada kategori. Klik tombol "+ Tambah Kategori" untuk menambahkan kategori baru.
+                        </td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 @endsection
+
+@section('footer')
+<style>
+    footer {
+        display: none !important;
+    }
+</style>
+@stop
